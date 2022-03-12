@@ -3,7 +3,7 @@ import { Button, View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-function QuizButtons({step}) {
+function QuizButtons({step, onQuizButtonClick}) {
   let q1 = 'Back of the Tongue'
   let q2 = 'Front of the Tongue'
 
@@ -23,11 +23,11 @@ function QuizButtons({step}) {
 
   return(
     <>
-    <Pressable style={styles.quizButton}>
+    <Pressable style={styles.quizButton} onPress={()=> onQuizButtonClick()}>
       <Text style={styles.questionHeroText}>{q1}</Text>
       <Text style={styles.questionSupportingText}>NEEDS CONTENT</Text>
     </Pressable>
-    <Pressable style={styles.quizButton}>
+    <Pressable style={styles.quizButton} onPress={()=> onQuizButtonClick(1)}>
       <Text style={styles.questionHeroText}>{q2}</Text>
       <Text style={styles.questionSupportingText}>NEEDS CONTENT</Text>
     </Pressable>

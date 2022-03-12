@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import QuizButtons from '../components/QuizButtons'
 
 function DiagnoseQuizScreen({ route, navigation }) {
+  const [quizScore, setQuizScore] = useState(0);
   const [step, setStep] = useState(1);
   const [diagnoseObject] = useState({
     where: null,
@@ -14,6 +15,11 @@ function DiagnoseQuizScreen({ route, navigation }) {
     flavor: null,
     mouthfeel: null
   })
+
+  function onQuizButtonClick(num = 0) {
+    setQuizScore(quizScore + num);
+    setStep(step + 1);
+  }
 
   function stepHelper (num){
     let complete = styles.complete;
@@ -39,9 +45,13 @@ function DiagnoseQuizScreen({ route, navigation }) {
     question = <Text style={styles.heroFont}>What was the <Text style={styles.innerText}>acidity</Text> like?</Text>;
   } else if (step === 4) {
     percentLine = 75;
-    question = <Text style={styles.heroFont}>What was the <Text style={styles.innerText}>flavor</Text> like?</Text>;  } else if (step === 5) {
+    question = <Text style={styles.heroFont}>What was the <Text style={styles.innerText}>flavor</Text> like?</Text>;
+  } else if (step === 5) {
     percentLine = 100;
     question = <Text style={styles.heroFont}>What was the <Text style={styles.innerText}>mouthfeel</Text> like?</Text>;
+  } else if (step > 5) {
+    percentLine = 100;
+    question = <Text style={styles.heroFont}>Check out your <Text style={styles.innerText}>results</Text>.</Text>;
   }
 
 
@@ -68,7 +78,6 @@ function DiagnoseQuizScreen({ route, navigation }) {
             backgroundColor: 'rgba(23, 163, 76, 1)',
             zIndex: 2,
           }} />
-
               <View style={stepHelper(1)}>
                 <Text>1</Text>
               </View>
@@ -91,9 +100,18 @@ function DiagnoseQuizScreen({ route, navigation }) {
           {question}
         </View>
 
-        <View style={styles.quizButtons}>
-          <QuizButtons step={step}/>
-        </View>
+        {(step > 5) ? (
+          <>
+            <Pressable style={styles.quizButton} onPress={()=> navigation.navigate('Results', { quizScore })}>
+              <Text style={styles.questionHeroText}>Your Results</Text>
+            </Pressable>
+          </>
+        ) : (
+          <View style={styles.quizButtons}>
+            <QuizButtons step={step} onQuizButtonClick={onQuizButtonClick}/>
+          </View>
+        )}
+
       </View>
     )
 
