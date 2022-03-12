@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   heroFont: {
     fontSize: 42,
     fontWeight: '700',
-    lineHeight: 37,
+    lineHeight: 40,
   },
   stepsContainer: {
     display: 'flex',
@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     height: 125,
+    width: '100%',
     marginBottom: 125
   },
   quizButtons: {
