@@ -9,7 +9,7 @@ import BrewCarousel from '../components/BrewCarousel';
 const coffeeItems = [
   {
     id: 1,
-    method: 'Pour Over',
+    method: 'Pourover',
     image: require('../../assets/Pourover.png')
   },
   {

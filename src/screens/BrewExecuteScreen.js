@@ -4,13 +4,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Brew Data
-import { pourover } from '../staticData/brewData';
+import brewObject from '../staticData/brewData';
 // Component
 import Measurement from '../components/Measurement';
 
 function BrewExecuteScreen({ route, navigation }) {
-  const [seconds, setSeconds] = useState(0);
+  const { method } = route.params;
+  const [seconds, setSeconds] = useState(179);
+  const [brewObj, setBrewObj] = useState(brewObject[method].stepOne);
   const [isActive, setIsActive] = useState(false);
+
+  let percentage = ((seconds / 180) * 100) + '%';
 
   function secondsToHms(d) {
     d = Number(d);
@@ -23,8 +27,91 @@ function BrewExecuteScreen({ route, navigation }) {
     var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
     return '0' + m + ':' + s;
   };
+
+  function buttonHelper () {
+    if (brewObj.step === '1') {
+      return (
+        <Pressable
+          style={styles.stepOneTwo}
+          onPress={() => setBrewObj(brewObject[method].stepTwo)}
+        >
+          <Text style={styles.brewText}>
+            Step 1 Complete
+          </Text>
+        </Pressable>
+      )
+    } else if (brewObj.step === '2') {
+      return (
+        <Pressable
+          style={styles.stepOneTwo}
+          onPress={() => setBrewObj(brewObject[method].stepThree)}
+        >
+          <Text style={styles.brewText}>
+            Step 2 Complete
+          </Text>
+        </Pressable>
+      )
+    } else if(seconds === 180) {
+      return (
+        <Pressable
+          style={styles.stepOneTwo}
+          onPress={() => navigation.navigate('Rate', { method })} // MOVE TO RATING SCREEN
+        >
+          <Text style={styles.brewText}>
+            Rate your brew!
+          </Text>
+        </Pressable>
+      )
+    } else if (brewObj.step !== '1' && brewObj.step !== '2' ) {
+      return (
+        <Pressable
+          style={styles.startStop}
+          onPress={() => setIsActive(!isActive)}
+        >
+          <Text style={styles.brewText} >
+            { isActive ? 'Pause' : 'Start' }
+          </Text>
+        </Pressable>
+      )
+    }
+  };
+
+
+
+  function returnImage () {
+    let imageObject = {
+      Pourover: {
+        one: <Image style={styles.filter} source={require('../../assets/Filter.png')} />,
+        two: <Image style={styles.filter} source={require('../../assets/Beans.png')} />,
+        three: <Image style={styles.filter} source={require('../../assets/Filter.png')} />,
+        four: <Image style={styles.filter} source={require('../../assets/Kettle.png')} />,
+        five: <Image style={styles.filter} source={require('../../assets/Filter.png')} />,
+        six: <Image style={styles.filter} source={require('../../assets/Mug.png')} />,
+
+      }
+    };
+
+    if (brewObj.step === '1') {
+      return imageObject[method].one;
+    } else if (brewObj.step === '2') {
+      return imageObject[method].two;
+    } else if (brewObj.step === '3') {
+      return imageObject[method].three;
+    } else if (brewObj.step === '4') {
+      return imageObject[method].four;
+    } else if (brewObj.step === '5') {
+      return imageObject[method].five;
+    } else if (brewObj.step === '6') {
+      return imageObject[method].six;
+    }
+  };
+
+
+
+  // useEffect for Timer:
   useEffect(() => {
     let interval = null;
+
     if (seconds < 180 && isActive) {
       interval = setInterval(() => {
         setSeconds(seconds => seconds + 1);
@@ -32,79 +119,90 @@ function BrewExecuteScreen({ route, navigation }) {
     } else {
       clearInterval(interval);
     }
+
+    if ( method === 'Pourover' &&
+        brewObj.step !== '1' &&
+        brewObj.step !== '2') {
+        if (seconds > 45 && seconds < 120) {
+        setBrewObj(brewObject[method].stepFour);
+      } else if (seconds > 120 && seconds < 180) {
+        setBrewObj(brewObject[method].stepFive);
+      } else if (seconds === 180) {
+        setBrewObj(brewObject[method].stepSix);
+      }
+    }
     return () => clearInterval(interval);
   }, [isActive, seconds]);
 
-  let percentage = ((seconds / 180) * 100) + '%';
-
-  function stepFunction(brewMethod) {
-    if (seconds < 20) {
-      return brewMethod
-    }
-  }
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.topContainer}>
-        <View style={styles.stepCountCountainer}>
-          <Text style={styles.numberIndicator}>1</Text>
-          <Text>/6</Text>
-        </View>
-        <Text>POUROVER</Text>
-        <Pressable>
-          <Image source={require('../../assets/Close.png')} />
-        </Pressable>
-      </View>
-
-      <View style={styles.stepsDescriptionContainer}>
-        <View style={styles.stepsDescriptionTop}>
-          <View style={styles.stepCircle}>
-            <Text>1</Text>
+  return brewObj.image === null ? null : (
+     (
+      <View style={styles.container}>
+        <View style={styles.topContainer}>
+          <View style={styles.stepCountCountainer}>
+            <Text style={styles.numberIndicator}>{brewObj.step}</Text>
+            <Text> / 6</Text>
           </View>
-          <Text style={styles.stepText}>Rinse the Filter</Text>
+          <Text>{ method }</Text>
+          <Pressable onPress={() => navigation.navigate('Home')} >
+            <Image source={require('../../assets/Close.png')} />
+          </Pressable>
         </View>
-        <Text style={styles.stepTextDetails}>Place and rinse the Kalita Wave filter in the dripper. This removes the paper flavor from the filter and warms everything up. Heat up your mug while you’re at it.</Text>
-      </View>
 
-      <View style={styles.timerContainer}>
-        <Text style={styles.timer}>{secondsToHms(seconds)}</Text>
-        <Pressable
-          style={styles.startStop}
-          onPress={() => setIsActive(!isActive)}
-        >
-          <Text style={styles.brewText}>
-            {isActive ? 'Pause' : 'Start'}
-          </Text>
-        </Pressable>
-      </View>
-      <Image style={styles.filter} source={require('../../assets/Filter.png')} />
-      <View style={styles.dotsContainer}>
-        <View style={{
-          position: 'absolute',
-          borderRadius: 5,
-          width: percentage,
-          height: 6,
-          backgroundColor: 'rgba(57, 152, 239, 1)',
-          borderColor: 'blue',
-          top: -1,
-          left: 0,
-          zIndex: 2,
-        }}></View>
-        <View style={styles.parentLine}>
-          <View style={styles.circle} />
-          <View style={styles.circle} />
-          <View style={styles.circle} />
-          <View style={styles.circle} />
-          <View style={styles.circle} />
-          <View style={styles.circle} />
+        <View style={styles.stepsDescriptionContainer}>
+          <View style={styles.stepsDescriptionTop}>
+            <View style={styles.stepCircle}>
+              <Text>{brewObj.step}</Text>
+            </View>
+            <Text style={styles.stepText}>{brewObj.title}</Text>
+          </View>
+          <Text style={styles.stepTextDetails}>{brewObj.stepText}</Text>
         </View>
+
+        <View style={styles.timerContainer}>
+          { (brewObj.step !== '1' && brewObj.step !== '2' && seconds < 180) ? <Text style={styles.timer}>{secondsToHms(seconds)}</Text> : <></>}
+          { buttonHelper() }
+        </View>
+
+
+        {/* {imageObject[method].one} */}
+        {returnImage()}
+
+        {(brewObj.step !== '1' && brewObj.step !== '2' && seconds < 180) ? (
+          <View style={styles.dotsContainer}>
+          <View style={{
+              position: 'absolute',
+              borderRadius: 5,
+              width: percentage,
+              height: 6,
+              backgroundColor: 'rgba(57, 152, 239, 1)',
+              borderColor: 'blue',
+              top: -1,
+              left: 0,
+              zIndex: 2,
+            }}
+          />
+
+          <View style={styles.parentLine}>
+            <View style={styles.circle} />
+            <View style={styles.circle} />
+            <View style={styles.circle} />
+            <View style={styles.circle} />
+            <View style={styles.circle} />
+            <View style={styles.circle} />
+          </View>
+        </View>
+        ) : <></>}
+
+        <View style={styles.nextStepsText}>
+          <Text>NEXT: {brewObj.next}</Text>
+        </View>
+
       </View>
-      <View style={styles.nextStepsText}>
-        <Text>NEXT: MEASURE & GRIND</Text>
-      </View>
-    </View>
-  );
+    )
+  )
 }
+
+
 
 const styles = StyleSheet.create({
   // TOP
@@ -208,6 +306,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginBottom: 23,
+  },
+  stepOneTwo: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 290,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: 'rgba(57, 152, 239, 1)',
+    borderRadius: 5,
   },
   startStop: {
     display: 'flex',

@@ -1,5 +1,5 @@
 export default brewObject = {
-  pourover: {
+  Pourover: {
     stepOne: {
       step: '1',
       image: '../../assets/filter.png',
@@ -12,14 +12,14 @@ export default brewObject = {
       image: '../../assets/Beans.png',
       title: 'Measure & Grind',
       stepText: 'Discard the rinse water from the carafe or mug and grind 21g (about 3 Tablespoons) of coffee as fine as table salt. Add it to the filter, making sure the bed is completely flat. Place the Kalita Wave on top of a carafe or mug. Tare your scale to zero.',
-      next: 'Saturate the Grounds',
+      next: 'SATURATE THE GROUNDS',
     },
     stepThree: {
       step: '3',
       image: '../../assets/Filter.png',
       title: 'Saturate the Grounds',
-      stepText: 'Saturate the dry grounds completely with 60g of hot water right off the boil (about 205°F) in the first 10 seconds and allow it to bloom. Coffee degasses or “blooms” when it’s fresh–the coffee bed should rise up and bubble a bit. Give the coffee a stir with a spoon.',
-      next: 'Second Pour',
+      stepText: 'Start the timer! Saturate the dry grounds completely with 60g of hot water right off the boil (about 205°F) in the first 10 seconds and allow it to bloom. Coffee degasses or “blooms” when it’s fresh–the coffee bed should rise up and bubble a bit. Give the coffee a stir with a spoon.',
+      next: 'SECOND POUR',
     },
     stepFour: {
       step: '4',
@@ -33,7 +33,7 @@ export default brewObject = {
       image: '../../assets/Filter.png',
       title: 'Pulse & Wait',
       stepText: 'Pour small amounts (25-50g of water) periodically to hit 375g by 2:00. Submerging dark spots and avoiding light spots, slowly bring the water level to the top for an even extraction.',
-      next: 'Serve & Enjoy',
+      next: 'SERVE & ENJOY',
     },
     stepSix: {
       step: '6',

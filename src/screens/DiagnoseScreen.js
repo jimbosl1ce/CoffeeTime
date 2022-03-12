@@ -3,12 +3,12 @@ import { Button, View, Text, StyleSheet, Pressable, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-function HomeScreen({ navigation }) {
+function DiagnoseScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.accountContainer}>
         <Pressable style={styles.accountPress}>
-          <Image style={styles.logo} source={require('../../assets/AccountButton.png')} />
+          <Image style={{height: 25, width: 25, marginRight: 10}} source={require('../../assets/AccountButton.png')} />
           <Text style={styles.font}>TREY</Text>
         </Pressable>
         <Pressable style={styles.logOut}>
@@ -16,14 +16,13 @@ function HomeScreen({ navigation }) {
         </Pressable>
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.heroFont}>Let's make coffee.</Text>
-        <Text style={styles.regularFont}>You haven't brewed your first cup!</Text>
-        <Text style={styles.regularFont}>Let's take care of that for you.</Text>
+        <Text style={styles.heroFont}>Make better coffee.</Text>
+        <Text style={styles.regularFont}>If you need some help, use our coffee quiz to learn how to make it better next time.</Text>
       </View>
       <View style={styles.actionContainer}>
-        <Pressable style={styles.startBrewing} onPress={()=> navigation.navigate('Brew')}>
-          <Text style={styles.fontStartBrewing}>Start Brewing</Text>
-          <Image style={styles.logo} source={require('../../assets/Coffee.png')} />
+        <Pressable style={styles.startBrewing} onPress={()=> navigation.navigate('Quiz')}>
+          <Text style={styles.fontStartBrewing}>Diagnose Your Brew</Text>
+          <Image style={styles.logo} source={require('../../assets/CHANGEME.png')} />
         </Pressable>
       </View>
     </View>
@@ -54,14 +53,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    backgroundColor: 'yellow',
+    backgroundColor: 'rgba(23, 163, 76, 1)',
     height: 60,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 4
   },
   fontStartBrewing: {
-    fontSize: 20
+    fontSize: 20,
+    color: '#fff'
   },
   heroFont: {
     fontSize: 58,
@@ -73,8 +73,8 @@ const styles = StyleSheet.create({
     color: '#fff'
   },
   logo: {
-    height: 25,
-    width: 25,
+    height: 30,
+    width: 30,
     marginRight: 10
   },
   accountPress: {
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default HomeScreen;
+export default DiagnoseScreen;

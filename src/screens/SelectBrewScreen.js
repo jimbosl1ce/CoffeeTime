@@ -54,7 +54,7 @@ function SelectBrewScreen({ route, navigation }) {
       <Image style={styles.brewMethodImage} source={image} />
       <Measurement amount={amount} plus={plus} minus={minus}/>
       <Pressable
-        onPress={() => navigation.navigate('Execute')}
+        onPress={() => navigation.navigate('Execute', { method })}
         style={styles.startBrew}
       >
          <Text style={styles.startBrewFont}>START BREW</Text>

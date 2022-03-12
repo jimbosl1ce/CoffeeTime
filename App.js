@@ -9,6 +9,9 @@ import BrewScreen from './src/screens/BrewScreen';
 import SignupScreen from './src/screens/SignupScreen';
 import SelectBrewScreen from './src/screens/SelectBrewScreen';
 import BrewExecuteScreen from './src/screens/BrewExecuteScreen';
+import RatingScreen from './src/screens/RatingScreen';
+import DiagnoseScreen from './src/screens/DiagnoseScreen';
+import DiagnoseQuizScreen from './src/screens/DiagnoseQuizScreen';
 
 const Stack = createNativeStackNavigator();
 function App() {
@@ -20,6 +23,9 @@ function App() {
         <Stack.Screen name="Brew" component={BrewScreen} options={{ title: 'Get Brewin\'' }} />
         <Stack.Screen name="SelectBrew" component={SelectBrewScreen} options={{ title: 'Bartle Doo' }} />
         <Stack.Screen name="Execute" component={BrewExecuteScreen} options={{ title: 'Cawf Time' }} />
+        <Stack.Screen name="Rate" component={RatingScreen} options={{ title: 'How\'d it go?' }} />
+        <Stack.Screen name="Diagnose" component={DiagnoseScreen} options={{ title: 'Diagnose' }} />
+        <Stack.Screen name="Quiz" component={DiagnoseQuizScreen} options={{ title: 'Diagnose' }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
