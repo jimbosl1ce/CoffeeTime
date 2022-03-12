@@ -53,7 +53,7 @@ function BrewScreen({ navigation }) {
               data={coffeeItems}
               renderItem={({item}) => {
                 return (
-                  <Pressable onPress={() => navigation.navigate('SelectBrew', {method: item.method, image: item.image})}>
+                  <Pressable onPress={() => navigation.navigate('SelectBrew', {method: item.method, image: item.image })}>
                     <BrewCarousel coffeeStuff={item} />
                   </Pressable>
                 )

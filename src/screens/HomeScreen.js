@@ -18,7 +18,7 @@ function HomeScreen({ navigation }) {
       <View style={styles.textContainer}>
         <Text style={styles.heroFont}>Let's make coffee.</Text>
         <Text style={styles.regularFont}>You haven't brewed your first cup!</Text>
-        <Text style={styles.regularFont}>Let's take care of that for you.</Text>
+        <Text style={styles.regularFont}>Let's take care of that for you.</Text> 
       </View>
       <View style={styles.actionContainer}>
         <Pressable style={styles.startBrewing} onPress={()=> navigation.navigate('Brew')}>

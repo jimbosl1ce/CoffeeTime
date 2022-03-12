@@ -4,44 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
-function Measurement({coffeeStuff}) {
-  const [amount, setAmount] = useState({
-    cup: 1,
-    water: 400,
-    waterOz: 13.5,
-    coffeeBeans: 24,
-    tbspn: 1.5,
-  });
-
-  function plus() {
-    if (amount.cup > 4.9) {
-      return;
-    } else {
-      setAmount({
-        ...amount,
-        cup: amount.cup + .5,
-        coffeeBeans: amount.coffeeBeans + 12,
-        water: amount.water + 200,
-        waterOz: amount.waterOz + 7.25,
-        tbspn: amount.tbspn + .75
-      })
-    }
-  };
-
-  function minus() {
-    if (amount.cup <= 0.5) {
-      return;
-    } else {
-      setAmount({
-        ...amount,
-        cup: amount.cup - .5,
-        coffeeBeans: amount.coffeeBeans - 12,
-        water: amount.water - 200,
-        waterOz: amount.waterOz - 7.25,
-        tbspn: amount.tbspn - .75
-      })
-    }
-  }
+function Measurement({coffeeStuff, amount, plus, minus}) {
 
   return (
     <View style={styles.container}>
@@ -82,9 +45,7 @@ function Measurement({coffeeStuff}) {
            <Text style={styles.measureSupportingText}>BREW TIME</Text>
          </View>
        </View>
-       <View style={styles.startBrew}>
-         <Text style={styles.startBrewFont}>START BREW</Text>
-       </View>
+
     </View>
   );
 }
@@ -136,20 +97,7 @@ const styles = StyleSheet.create({
     color: 'rgba(102,102,102,1)',
     letterSpacing: 0.6
   },
-  startBrew: {
-    // position: 'absolute',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 80,
-    width: 80,
-    backgroundColor: 'rgba(57,152,239, 1)',
-    borderRadius: 50,
-  },
-  startBrewFont: {
-    color: '#fff',
-    alignSelf: 'center',
-  }
+
 })
 
 export default Measurement;
