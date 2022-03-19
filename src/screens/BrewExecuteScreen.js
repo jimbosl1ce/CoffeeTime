@@ -10,7 +10,7 @@ import Measurement from '../components/Measurement';
 
 function BrewExecuteScreen({ route, navigation }) {
   const { method } = route.params;
-  const [seconds, setSeconds] = useState(179);
+  const [seconds, setSeconds] = useState(0);
   const [brewObj, setBrewObj] = useState(brewObject[method].stepOne);
   const [isActive, setIsActive] = useState(false);
 

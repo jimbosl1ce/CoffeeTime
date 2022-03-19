@@ -9,6 +9,7 @@ function ResultsScreen({ navigation, route }) {
   const [open3, setOpen3] = useState(false);
   const { quizScore } = route.params;
   return (
+    <>
     <View style={styles.container}>
 
 
@@ -61,6 +62,7 @@ function ResultsScreen({ navigation, route }) {
       </View>
 
     </View>
+    </>
   );
 }
 
